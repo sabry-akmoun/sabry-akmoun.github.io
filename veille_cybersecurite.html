@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille Informatique — L'évolution des cyberattaques</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e63946;
+    --red-dim: #7d1c23;
+    --bg: #0a0a0f;
+    --bg2: #10101a;
+    --bg3: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #6b6b85;
+    --accent: #4cc9f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(230,57,70,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,57,70,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.2);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .label::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: blink 1.4s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+
+  .meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* INTRO */
+  .intro {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .intro p {
+    font-size: 1.05rem;
+    color: #b0b0c8;
+    max-width: 680px;
+  }
+
+  /* TIMELINE */
+  .timeline { padding: 3rem 0; }
+
+  .timeline-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 80px 1px 1fr;
+    gap: 0 2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeup 0.5s forwards;
+  }
+
+  .tl-item:nth-child(2) { animation-delay: 0.1s; }
+  .tl-item:nth-child(3) { animation-delay: 0.2s; }
+  .tl-item:nth-child(4) { animation-delay: 0.3s; }
+  .tl-item:nth-child(5) { animation-delay: 0.4s; }
+  .tl-item:nth-child(6) { animation-delay: 0.5s; }
+
+  @keyframes fadeup { to { opacity:1; transform:translateY(0); } }
+
+  .tl-year {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--red);
+    padding-top: 0.2rem;
+    text-align: right;
+  }
+
+  .tl-line {
+    background: var(--border);
+    position: relative;
+  }
+
+  .tl-line::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px; height: 7px;
+    background: var(--red);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(230,57,70,0.5);
+  }
+
+  .tl-content { padding-bottom: 1rem; }
+
+  .tl-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .tl-content p {
+    font-size: 0.85rem;
+    color: #8888a8;
+    line-height: 1.65;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h2::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 1.3rem;
+    background: var(--red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* STAT CARDS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1.4rem 1.2rem;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .stat:hover::after { transform: scaleX(1); }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* CARDS ATTAQUES */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .card:hover {
+    border-color: rgba(230,57,70,0.3);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 0.8rem;
+    color: #7878a0;
+    line-height: 1.6;
+  }
+
+  .card .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(230,57,70,0.1);
+    color: var(--red);
+    border: 1px solid rgba(230,57,70,0.2);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 0.8rem;
+  }
+
+  /* QUOTE */
+  .quote {
+    background: var(--bg2);
+    border-left: 3px solid var(--red);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .quote p {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #a0a0c0;
+    line-height: 1.7;
+  }
+
+  .quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* TENDANCES */
+  .tendances { list-style: none; }
+
+  .tendances li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+    color: #9090b8;
+  }
+
+  .tendances li:last-child { border-bottom: none; }
+
+  .tendances li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .tendances li .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--red);
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 0;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .sources {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .sources span { display: block; }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .cards { grid-template-columns: 1fr; }
+    .tl-item { grid-template-columns: 60px 1px 1fr; gap: 0 1rem; }
+    footer { flex-direction: column; }
+    .sources { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <a href="./index.html#veille" style="display:inline-flex;align-items:center;gap:6px;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--muted);text-decoration:none;letter-spacing:0.1em;margin-bottom:2rem;transition:color 0.2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Retour au portfolio
+  </a>
+  <div class="label">Veille informatique · Cybersécurité</div>
+    <h1>L'évolution des<br><em>cyberattaques</em></h1>
+    <div class="meta">
+      <span>📅 Avril 2026</span>
+      <span>✍️ Sabry Akmoun — BTS SIO SISR</span>
+      <span>⏱ Lecture : ~4 min</span>
+    </div>
+  </header>
+
+  <div class="intro">
+    <p>Les cyberattaques ne cessent d'évoluer en sophistication, en fréquence et en impact. Ce qui relevait autrefois du piratage amateur est aujourd'hui une industrie criminelle organisée, parfois soutenue par des États. Cette veille dresse un panorama de cette évolution et des menaces actuelles.</p>
+  </div>
+
+  <!-- CHIFFRES CLÉS -->
+  <section class="section">
+    <h2>Chiffres clés en 2025</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">+38%</div>
+        <div class="stat-label">d'augmentation des cyberattaques mondiales entre 2023 et 2025</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4,88M$</div>
+        <div class="stat-label">coût moyen d'une violation de données en 2024 (IBM)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">72h</div>
+        <div class="stat-label">délai moyen de détection d'une intrusion dans un système</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPES D'ATTAQUES -->
+  <section class="section">
+    <h2>Les attaques dominantes aujourd'hui</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">N°1 mondial</div>
+        <div class="card-icon">🔒</div>
+        <h4>Ransomware</h4>
+        <p>Chiffrement des données suivi d'une demande de rançon. Les groupes utilisent désormais la double extorsion : payer ou voir ses données publiées.</p>
+      </div>
+      <div class="card">
+        <div class="tag">En forte hausse</div>
+        <div class="card-icon">🎣</div>
+        <h4>Phishing & Spear-phishing</h4>
+        <p>Les e-mails frauduleux sont de plus en plus ciblés et convaincants, renforcés par l'IA générative qui adapte le message à chaque victime.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Infrastructures</div>
+        <div class="card-icon">💥</div>
+        <h4>Attaques DDoS</h4>
+        <p>Saturation de serveurs par des millions de requêtes simultanées. Utilisées comme diversion ou levier d'extorsion. Les botnets IoT multiplient leur puissance.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Supply chain</div>
+        <div class="card-icon">🔗</div>
+        <h4>Attaques de la chaîne logicielle</h4>
+        <p>Compromettre un fournisseur de logiciels pour atteindre des milliers de clients en aval. L'attaque SolarWinds (2020) en est l'exemple le plus marquant.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <div class="quote">
+    <p>« La question n'est plus de savoir si votre organisation sera attaquée, mais quand. La résilience et la détection rapide sont désormais plus importantes que la seule prévention. »</p>
+    <cite>— Agence Nationale de la Sécurité des Systèmes d'Information (ANSSI), Rapport 2024</cite>
+  </div>
+
+  <!-- TENDANCES -->
+  <section class="section">
+    <h2>Tendances et perspectives</h2>
+    <ul class="tendances">
+      <li>
+        <span class="num">01</span>
+        <span><strong>L'IA au service des attaquants</strong> — Les LLM permettent de générer des campagnes de phishing ultra-personnalisées et du code malveillant plus sophistiqué à moindre coût.</span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span><strong>Menace quantique sur le chiffrement</strong> — L'ordinateur quantique pourrait à terme casser les algorithmes RSA et AES actuels, forçant une migration vers la cryptographie post-quantique.</span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span><strong>Explosion de la surface d'attaque IoT</strong> — Les milliards d'objets connectés mal sécurisés (caméras, routeurs, capteurs industriels) constituent une cible massive pour les botnets.</span>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <span><strong>Hacktivisme et cyberguerre hybride</strong> — Les conflits géopolitiques (Ukraine, Moyen-Orient) s'accompagnent systématiquement de campagnes cyber ciblant les infrastructures adverses.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SOURCES DE VEILLE -->
+  <section class="section">
+    <h2>Se tenir informé — Sources de veille</h2>
+    <p style="font-size:0.85rem;color:#7878a0;margin-bottom:1.5rem;line-height:1.7;">Pour suivre l'évolution des cyberattaques en temps réel, plusieurs sources institutionnelles et spécialisées font référence dans le domaine.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">Institutionnel 🇫🇷</div>
+        <h4>ANSSI</h4>
+        <p><strong style="color:#b0b0c8">cert.ssi.gouv.fr</strong> — L'Agence Nationale de la Sécurité des Systèmes d'Information publie des alertes, bulletins de sécurité et rapports annuels sur la menace cyber en France.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Institutionnel 🇪🇺</div>
+        <h4>ENISA</h4>
+        <p><strong style="color:#b0b0c8">enisa.europa.eu</strong> — L'agence européenne de cybersécurité publie chaque année son rapport ENISA Threat Landscape, référence sur les menaces à l'échelle européenne.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Rapport annuel</div>
+        <h4>Verizon DBIR</h4>
+        <p><strong style="color:#b0b0c8">verizon.com/dbir</strong> — Le Data Breach Investigations Report analyse chaque année des milliers de incidents réels. Incontournable pour comprendre les vecteurs d'attaque les plus courants.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Veille quotidienne</div>
+        <h4>The Hacker News</h4>
+        <p><strong style="color:#b0b0c8">thehackernews.com</strong> — Site d'actualité spécialisé publiant quotidiennement des articles sur les nouvelles vulnérabilités, attaques en cours et outils de sécurité.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Recherche</div>
+        <h4>Check Point Research</h4>
+        <p><strong style="color:#b0b0c8">research.checkpoint.com</strong> — Laboratoire de recherche en cybersécurité publiant des analyses techniques approfondies sur les malwares, APT et campagnes d'attaques mondiales.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Agrégateur</div>
+        <h4>CVE / NVD</h4>
+        <p><strong style="color:#b0b0c8">nvd.nist.gov</strong> — La base de données nationale des vulnérabilités (NIST) référence toutes les CVE connues. Essentielle pour surveiller les failles affectant les logiciels utilisés.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="section">
+    <h2>Conclusion</h2>
+    <p style="font-size:0.9rem; color:#9090b8; line-height:1.8;">Face à cette évolution constante, les organisations doivent adopter une posture de sécurité proactive : segmentation réseau, principe du moindre privilège, sauvegardes hors ligne, formations régulières des utilisateurs et plans de réponse aux incidents. La cybersécurité n'est plus une option technique mais un enjeu stratégique et économique majeur.</p>
+  </section>
+
+  <footer>
+    <p>© 2026 Sabry Akmoun — BTS SIO SISR · Lycée Victor Hugo, Marseille</p>
+    <div class="sources">
+      <span>Sources : ANSSI, IBM Cost of a Data Breach 2024,</span>
+      <span>Rapport Verizon DBIR 2024, Check Point Research</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
